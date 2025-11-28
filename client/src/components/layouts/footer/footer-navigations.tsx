@@ -1,12 +1,12 @@
-import Container from '@/components/ui/Container';
+import Container from "@/components/ui/Container";
 import {
   FOOTER_CONTACT,
   FOOTER_LINK_GROUPS,
   PAYMENT_METHODS,
-} from './footer-data';
-import FooterContactBlock from './molecules/FooterContactBlock';
-import FooterLinkGroup from './molecules/FooterLinkGroup';
-import FooterPayments from './molecules/FooterPayments';
+} from "./footer-data";
+import FooterContactBlock from "./molecules/FooterContactBlock";
+import FooterLinkGroup from "./molecules/FooterLinkGroup";
+import FooterPayments from "./molecules/FooterPayments";
 
 const FooterNavigation = () => {
   return (

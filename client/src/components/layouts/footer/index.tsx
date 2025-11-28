@@ -1,5 +1,5 @@
-import Container from '@/components/ui/Container';
-import FooterNavigation from './footer-navigations';
+import Container from "@/components/ui/Container";
+import FooterNavigation from "./footer-navigations";
 
 const Footer = () => {
   return (

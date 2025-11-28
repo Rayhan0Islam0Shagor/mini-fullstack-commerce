@@ -3,6 +3,7 @@ import FooterHeading from '../atoms/FooterHeading';
 import FooterText from '../atoms/FooterText';
 import SocialIconButton from '../atoms/SocialIconButton';
 import type { FooterContactInfo } from '../footer-data';
+import Link from 'next/link';
 
 const FooterContactBlock = ({
   tagline,
@@ -13,13 +14,15 @@ const FooterContactBlock = ({
   return (
     <div className="max-w-sm space-y-4">
       <div>
-        <Image
-          src="/assets/images/logo.png"
-          alt="logo"
-          width={100}
-          height={100}
-          className="object-contain h-auto"
-        />
+        <Link href="/" prefetch={false}>
+          <Image
+            src="/assets/images/logo.png"
+            alt="logo"
+            width={100}
+            height={100}
+            className="object-contain h-auto"
+          />
+        </Link>
         <FooterHeading className="mt-2 font-normal">{tagline}</FooterHeading>
       </div>
 

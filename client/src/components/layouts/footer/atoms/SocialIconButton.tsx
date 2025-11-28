@@ -1,5 +1,5 @@
-import type { IconType } from 'react-icons';
-import { cn } from '@/lib/utils';
+import type { IconType } from "react-icons";
+import { cn } from "@/lib/utils";
 
 interface SocialIconButtonProps {
   icon: IconType;
@@ -19,7 +19,7 @@ const SocialIconButton = ({
       aria-label={label}
       href={href}
       className={cn(
-        'flex h-8 w-8 items-center justify-center text-white transition hover:bg-[#00B4CC]',
+        "flex h-8 w-8 items-center justify-center text-white transition hover:bg-[#00B4CC]",
         className,
       )}
     >

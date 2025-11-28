@@ -2,15 +2,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaRegHeart } from 'react-icons/fa6';
 import { LuUser } from 'react-icons/lu';
-import CategorySearch from './CategorySearch';
 import Container from '@/components/ui/Container';
+import CategorySearch from './CategorySearch';
 
 const Header = () => {
   return (
     <header className="bg-[#03484D] text-white">
       <Container className="flex items-center justify-between py-2">
         <div className="flex items-center gap-6">
-          <Link href="/">
+          <Link href="/" prefetch={false}>
             <Image
               src="/assets/images/logo.png"
               alt="logo"

@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils';
-import type { PaymentMethod } from '../footer-data';
-import Image from 'next/image';
+import Image from "next/image";
+import { cn } from "@/lib/utils";
+import type { PaymentMethod } from "../footer-data";
 
 interface FooterPaymentsProps {
   methods: PaymentMethod[];
@@ -11,7 +11,7 @@ const FooterPayments = ({ methods, className }: FooterPaymentsProps) => {
   return (
     <div
       className={cn(
-        'flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between',
+        "flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between",
         className,
       )}
     >

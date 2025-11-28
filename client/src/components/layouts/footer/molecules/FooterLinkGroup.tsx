@@ -1,6 +1,6 @@
-import FooterHeading from '../atoms/FooterHeading';
-import FooterLink from '../atoms/FooterLink';
-import type { FooterLinkGroup as FooterLinkGroupType } from '../footer-data';
+import FooterHeading from "../atoms/FooterHeading";
+import FooterLink from "../atoms/FooterLink";
+import type { FooterLinkGroup as FooterLinkGroupType } from "../footer-data";
 
 const FooterLinkGroup = ({ heading, links }: FooterLinkGroupType) => {
   return (
