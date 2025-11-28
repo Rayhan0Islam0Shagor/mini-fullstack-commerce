@@ -1,0 +1,10 @@
+export { default as HeroTitle } from './HeroTitle';
+export { default as HeroDescription } from './HeroDescription';
+export { default as HeroButton } from './HeroButton';
+export { default as OfferBadge } from './OfferBadge';
+export { default as DotIndicator } from './DotIndicator';
+export { default as HeroContent } from './HeroContent';
+export { default as HeroBackground } from './HeroBackground';
+export { default as CarouselDots } from './CarouselDots';
+export { default as HeroSlide } from './HeroSlide';
+export { default as HeroCarousel } from './HeroCarousel';
