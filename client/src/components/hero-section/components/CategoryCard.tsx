@@ -36,13 +36,11 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
       </div>
 
       {/* White Overlay at Bottom - Category Name and Shop */}
-      <div className="absolute bottom-4 left-0 right-0 bg-white/85 px-4 py-3 flex items-center justify-between">
-        <h3 className="text-base lg:text-lg font-semibold text-gray-900 capitalize">
+      <div className="absolute shadow-md shadow-gray-600 bottom-4 -left-2 right-2 bg-white/90 px-4 py-3 flex items-center justify-between">
+        <h3 className="text-base lg:text-lg font-medium text-gray-900 capitalize">
           {category.name}
         </h3>
-        <span className="text-[#4A90E2] text-base lg:text-lg font-medium">
-          Shop
-        </span>
+        <span className="text-[#4A90E2] text-base lg:text-lg">Shop</span>
       </div>
     </Link>
   );
