@@ -13,17 +13,21 @@ export interface Category {
  * Reusable hook for fetching categories
  */
 export const useCategories = (enabled = true) => {
-  const { data, error, isLoading, mutate } = useSWR<Category[]>(
-    enabled ? '/category' : null,
-    fetcher,
-    {
-      revalidateOnFocus: true,
-      revalidateOnReconnect: true,
-    },
-  );
+  const { data, error, isLoading, mutate } = useSWR<
+    { success: boolean; message: string; data: Category[] } | Category[]
+  >(enabled ? '/category' : null, fetcher, {
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+  });
+
+  // Handle both API response format and direct array format
+  const categories =
+    data && typeof data === 'object' && 'data' in data
+      ? (data as { data: Category[] }).data
+      : (data as Category[]) || [];
 
   return {
-    categories: data || [],
+    categories,
     isLoading,
     isError: error,
     error,

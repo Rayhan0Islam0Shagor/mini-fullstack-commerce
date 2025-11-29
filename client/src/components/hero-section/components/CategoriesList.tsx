@@ -49,10 +49,10 @@ export const CategoriesList = () => {
   }
 
   return (
-    <section className="pt-20 pb-10 bg-[#F7F1CD]">
-      <Container className="relative px-2 lg:px-4">
-        <CategorySlider categories={categories} />
-      </Container>
-    </section>
+    <Container className="relative px-2 pt-20 lg:px-4 pb-10">
+      <CategorySlider categories={categories} />
+
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-black/20"></div>
+    </Container>
   );
 };

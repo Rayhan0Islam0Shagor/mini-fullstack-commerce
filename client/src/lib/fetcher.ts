@@ -28,8 +28,9 @@ export const fetcher = async <T = unknown>(
   const data = await response.json();
 
   // Handle API response format: { success, message, data, meta }
-  if (data && typeof data === 'object' && 'data' in data) {
-    return data.data as T;
+  // Return the full API response object to preserve meta for pagination
+  if (data && typeof data === 'object' && 'data' in data && 'success' in data) {
+    return data as T;
   }
 
   return data as T;
@@ -67,8 +68,9 @@ export const serverFetcher = async <T = unknown>(
   const data = await response.json();
 
   // Handle API response format: { success, message, data, meta }
-  if (data && typeof data === 'object' && 'data' in data) {
-    return data.data as T;
+  // Return the full API response object to preserve meta for pagination
+  if (data && typeof data === 'object' && 'data' in data && 'success' in data) {
+    return data as T;
   }
 
   return data as T;

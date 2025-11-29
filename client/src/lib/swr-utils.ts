@@ -24,9 +24,10 @@ export const serializeKey = (
  */
 export const prefetchData = async <T = unknown>(
   key: string,
+  options?: RequestInit,
 ): Promise<Record<string, T>> => {
   try {
-    const data = await serverFetcher<T>(key);
+    const data = await serverFetcher<T>(key, options);
 
     return {
       [key]: data,

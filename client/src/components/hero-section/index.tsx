@@ -28,7 +28,7 @@ const HERO_SECTION_CONTENT: HeroSlideContent[] = [
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden bg-linear-to-b from-[#F7F1CD] to-[#F8F4DE] pb-10">
+    <section className="relative overflow-hidden bg-linear-to-b from-[#F7F1CD] to-[#f8f4def0]">
       <HeroCarousel slides={HERO_SECTION_CONTENT} autoPlayInterval={5000} />
       <Categories />
     </section>

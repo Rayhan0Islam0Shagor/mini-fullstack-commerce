@@ -1,42 +1,31 @@
 import useSWR from 'swr';
 import { fetcher } from '@/lib/fetcher';
-
-export interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  image?: string;
-  stock?: number;
-  [key: string]: unknown;
-}
-
-export interface ProductsResponse {
-  data: Product[];
-  meta?: {
-    page?: number;
-    limit?: number;
-    total?: number;
-  };
-}
-
-interface UseProductsOptions {
-  category?: string;
-  page?: number;
-  limit?: number;
-  enabled?: boolean;
-}
+import {
+  ProductResponse,
+  ProductsResponse,
+  UseProductsOptions,
+} from '@/types/product.types';
 
 /**
  * Reusable hook for fetching products
  * Supports filtering by category, pagination, and conditional fetching
  */
 export const useProducts = (options?: UseProductsOptions) => {
-  const { category, page, limit, enabled = true } = options || {};
+  const {
+    searchTerm,
+    sort,
+    category,
+    page,
+    limit,
+    enabled = true,
+  } = options || {};
+
+  const sortBy = sort || 'createdAt';
 
   // Build query parameters
   const params = new URLSearchParams();
+  if (searchTerm) params.append('searchTerm', searchTerm);
+  params.append('sort', sortBy);
   if (category) params.append('category', category);
   if (page) params.append('page', page.toString());
   if (limit) params.append('limit', limit.toString());
@@ -67,13 +56,13 @@ export const useProducts = (options?: UseProductsOptions) => {
  * Hook for fetching a single product by ID
  */
 export const useProduct = (id: string | null, enabled = true) => {
-  const { data, error, isLoading, mutate } = useSWR<Product>(
+  const { data, error, isLoading, mutate } = useSWR<ProductResponse>(
     enabled && id ? `/product/${id}` : null,
     fetcher,
   );
 
   return {
-    product: data,
+    product: data?.data,
     isLoading,
     isError: error,
     error,
@@ -88,13 +77,14 @@ export const useProductsByCategory = (
   categoryName: string | null,
   enabled = true,
 ) => {
-  const { data, error, isLoading, mutate } = useSWR<Product[]>(
+  const { data, error, isLoading, mutate } = useSWR<ProductsResponse>(
     enabled && categoryName ? `/product/category/${categoryName}` : null,
     fetcher,
   );
 
   return {
-    products: data || [],
+    products: data?.data || [],
+    meta: data?.meta,
     isLoading,
     isError: error,
     error,
