@@ -80,6 +80,31 @@ connectDB();
 app.use('/api/v1/product', ProductRoutes);
 app.use('/api/v1/category', CategoryRoutes);
 
+// Global error handler (must be after all routes)
+app.use((err, req, res, next) => {
+  // If response already sent, delegate to default error handler
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  // Default error response
+  const statusCode = err.statusCode || err.status || 500;
+  const message = err.message || 'Internal Server Error';
+
+  // Format response
+  const response = {
+    success: false,
+    message,
+  };
+
+  // Add error details in development
+  if (process.env.NODE_ENV === 'development') {
+    response.error = err.stack;
+  }
+
+  res.status(statusCode).json(response);
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`API Documentation: http://localhost:${PORT}`);

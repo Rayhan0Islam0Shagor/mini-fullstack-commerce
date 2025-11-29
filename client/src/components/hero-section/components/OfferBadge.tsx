@@ -15,9 +15,11 @@ const OfferBadge = ({ offer, delay = 0.5 }: OfferBadgeProps) => {
         type: 'spring',
         stiffness: 200,
       }}
-      className="bg-linear-to-br from-orange-400 to-orange-600 rounded-full w-24 h-24 lg:w-32 lg:h-32 flex items-center justify-center shadow-lg z-10"
+      className="bg-linear-to-br from-[#FDC830] to-[#F37335] rounded-full w-24 h-24 lg:w-40 lg:h-40 flex items-center justify-center shadow-lg z-10"
     >
-      <span className="text-white text-lg lg:text-2xl">{offer}</span>
+      <span className="text-white text-center text-lg lg:text-5xl">
+        {offer}
+      </span>
     </motion.div>
   );
 };
