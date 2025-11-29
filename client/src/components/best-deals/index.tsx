@@ -1,11 +1,21 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useCategories } from '@/hooks/useCategories';
 import Container from '../ui/Container';
 import CategorySelector from './category-selector';
 import CategoryProducts from './category-products';
 
 const BestDeals = () => {
-  const [currentCategory, setCurrentCategory] = useState<string>('electronics');
+  // Fetch categories once in the parent component
+  const { categories, isLoading, isError, error } = useCategories();
+  const [currentCategory, setCurrentCategory] = useState<string>('');
+
+  // Initialize category with first available category
+  useEffect(() => {
+    if (categories && categories.length > 0 && !currentCategory) {
+      setCurrentCategory(categories[0].name);
+    }
+  }, [categories, currentCategory]);
 
   return (
     <section className="bg-white py-10">
@@ -14,10 +24,18 @@ const BestDeals = () => {
           <h2 className="text-2xl text-black">
             <span className="text-[#20D1DC]">Best</span> Deals
           </h2>
-          <CategorySelector setCurrentCategory={setCurrentCategory} />
+          <CategorySelector
+            categories={categories}
+            isLoading={isLoading}
+            isError={isError}
+            error={error}
+            setCurrentCategory={setCurrentCategory}
+          />
         </div>
 
-        <CategoryProducts currentCategory={currentCategory} />
+        {currentCategory && (
+          <CategoryProducts currentCategory={currentCategory} />
+        )}
       </Container>
     </section>
   );
