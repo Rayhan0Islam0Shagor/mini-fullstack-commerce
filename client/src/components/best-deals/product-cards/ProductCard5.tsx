@@ -23,6 +23,7 @@ const ProductCard5 = ({ product, animation }: ProductCard5Props) => {
   const productId = product.id || product._id;
   const productImage = product.image || '';
   const productPrice = product.price || 0;
+  const productStock = product.stock ?? 0;
 
   return (
     <motion.div
@@ -59,9 +60,25 @@ const ProductCard5 = ({ product, animation }: ProductCard5Props) => {
         <Link href={`/products/${productTitle}-${productId}`}>
           <h3>{productTitle}</h3>
         </Link>
-        <p className="text-[#00CAD7] text-lg">
-          RS. {Math.round(productPrice).toLocaleString()}
-        </p>
+
+        <div className="flex items-center gap-2">
+          <p className="text-[#C82020] text-lg lg:text-[27px]">
+            RS. {Math.round(productPrice).toLocaleString()}
+          </p>
+          <p className="text-xs lg:text-sm text-gray-500 line-through">
+            RS. {Math.round(productPrice).toLocaleString()}
+          </p>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-10 mt-1">
+          <p className="text-xs lg:text-base text-[#0AAEB9]">
+            Already Sold: {6}
+          </p>
+
+          <p className="text-xs lg:text-base text-[#0AAEB9]">
+            Available: {productStock}
+          </p>
+        </div>
       </div>
     </motion.div>
   );
