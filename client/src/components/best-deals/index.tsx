@@ -20,8 +20,8 @@ const BestDeals = () => {
   return (
     <section className="bg-white py-10">
       <Container>
-        <div className="flex items-center justify-between gap-4">
-          <h2 className="text-2xl text-black">
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          <h2 className="text-2xl text-black whitespace-nowrap shrink-0">
             <span className="text-[#20D1DC]">Best</span> Deals
           </h2>
           <CategorySelector

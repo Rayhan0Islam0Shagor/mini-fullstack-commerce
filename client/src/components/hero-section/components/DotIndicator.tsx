@@ -14,14 +14,12 @@ const DotIndicator = ({ isActive, onClick, index }: DotIndicatorProps) => {
       aria-label={`Go to slide ${index + 1}`}
     >
       <motion.div
-        className={`h-2 transition-all ${
-          isActive
-            ? 'w-8 bg-[#0E3B3E] rounded-[3px]'
-            : 'w-2 bg-gray-400 rounded-sm'
+        className={`h-2 transition-all rounded-[3px] ${
+          isActive ? 'w-8 bg-[#0E3B3E]' : 'w-4 bg-[#AA9393]'
         }`}
         animate={{
-          width: isActive ? 32 : 8,
-          backgroundColor: isActive ? '#0E3B3E' : '#9CA3AF',
+          width: isActive ? 32 : 28,
+          backgroundColor: isActive ? '#0E3B3E' : '#AA9393',
         }}
         transition={{ duration: 0.3 }}
         whileHover={{ scale: 1.2 }}
