@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import './globals.css';
 import { Footer, Header, Navbar } from '@/components/layouts';
-import { SWRProvider } from '@/providers/SWRProvider';
+import Providers from '@/providers';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -26,12 +26,12 @@ export default function RootLayout({
         className={`${roboto.className} antialiased flex flex-col min-h-svh`}
         suppressHydrationWarning
       >
-        <SWRProvider>
+        <Providers>
           <Header />
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
-        </SWRProvider>
+        </Providers>
       </body>
     </html>
   );

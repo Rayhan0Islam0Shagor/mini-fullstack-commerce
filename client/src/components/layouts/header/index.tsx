@@ -4,6 +4,7 @@ import { FaRegHeart } from 'react-icons/fa6';
 import { LuUser } from 'react-icons/lu';
 import Container from '@/components/ui/Container';
 import CategorySearch from './CategorySearch';
+import CartButton from './CartButton';
 
 const Header = () => {
   return (
@@ -44,30 +45,7 @@ const Header = () => {
           <div className="flex items-center gap-3">
             <LuUser className="size-6 text-white" />
             <FaRegHeart className="size-6 text-white" />
-            <button
-              type="button"
-              className="flex items-center gap-1 cursor-pointer"
-              // onClick={() => router.push('/cart')}
-              // onKeyDown={(e) => {
-              //   if (e.key === 'Enter' || e.key === ' ') {
-              //     router.push('/cart');
-              //   }
-              // }}
-            >
-              <span className="relative">
-                <Image
-                  src="/assets/icons/shopping-cart.png"
-                  alt="cart"
-                  width={24}
-                  height={24}
-                  className="object-contain"
-                />
-                <span className="absolute -top-3 left-[11px] text-[#FDDE3B] text-[15px]">
-                  3
-                </span>
-              </span>
-              <span className="text-[15px] text-white font-light">Cart</span>
-            </button>
+            <CartButton />
           </div>
         </div>
       </Container>

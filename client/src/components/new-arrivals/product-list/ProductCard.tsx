@@ -1,8 +1,10 @@
+import { useCart } from '@/contexts/cart-context';
 import { Product } from '@/types/product.types';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const ProductCard = ({ product }: { product: Product }) => {
+  const { handleAddToCart } = useCart();
   const productName = (product.name || product.title || 'Product').trim();
   const displayName =
     productName.length > 20 ? `${productName.substring(0, 20)}..` : productName;
@@ -58,6 +60,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         onClick={() => {
           // TODO: Implement add to cart functionality
           console.log('Add to cart:', product);
+          handleAddToCart(product, 1);
         }}
       >
         Add to cart
