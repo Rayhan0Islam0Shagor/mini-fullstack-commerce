@@ -21,6 +21,9 @@ const CategorySelector = ({
 }: CategorySelectorProps) => {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const buttonRefs = useRef<{ [key: number]: HTMLButtonElement | null }>({});
+  const isInitialMount = useRef(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isMountedRef = useRef(true);
 
   // Initialize the first category when categories are loaded
   useEffect(() => {
@@ -29,16 +32,46 @@ const CategorySelector = ({
     }
   }, [categories, setCurrentCategory, currentCategoryIndex]);
 
-  // Scroll active category into view when index changes
+  // Scroll active category into view when index changes (only on mobile devices)
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    // Only scroll on mobile/tablet devices (below md breakpoint - 768px)
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+    if (!isMobile) {
+      return;
+    }
+
     const activeButton = buttonRefs.current[currentCategoryIndex];
-    if (activeButton) {
-      activeButton.scrollIntoView({
+    const container = containerRef.current;
+
+    if (activeButton && container && isMountedRef.current) {
+      // Scroll within the container, not the whole page
+      const containerRect = container.getBoundingClientRect();
+      const buttonRect = activeButton.getBoundingClientRect();
+      const scrollLeft = container.scrollLeft;
+      const buttonOffset = buttonRect.left - containerRect.left;
+      const buttonWidth = buttonRect.width;
+      const containerWidth = containerRect.width;
+
+      // Calculate the position to center the button
+      const targetScroll =
+        scrollLeft + buttonOffset - containerWidth / 2 + buttonWidth / 2;
+
+      container.scrollTo({
+        left: targetScroll,
         behavior: 'smooth',
-        block: 'nearest',
-        inline: 'center',
       });
     }
+
+    // Cleanup: mark as unmounted to prevent operations after unmount
+    return () => {
+      isMountedRef.current = false;
+    };
   }, [currentCategoryIndex]);
 
   if (isLoading) {
@@ -62,7 +95,10 @@ const CategorySelector = ({
 
   return (
     <div className="flex-1 flex items-center justify-end md:gap-10 gap-4">
-      <div className="flex items-center gap-4 max-w-[250px] md:max-w-lg lg:max-w-2xl overflow-x-auto scrollbar-hide">
+      <div
+        ref={containerRef}
+        className="flex items-center gap-4 max-w-[250px] md:max-w-lg lg:max-w-2xl overflow-x-auto scrollbar-hide"
+      >
         {categories.map((category, index) => (
           <button
             key={category._id}
