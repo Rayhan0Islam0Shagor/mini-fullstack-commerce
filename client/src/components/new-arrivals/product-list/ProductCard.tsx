@@ -58,8 +58,6 @@ const ProductCard = ({ product }: { product: Product }) => {
       <button
         className="w-full bg-[#0AAEB9] text-white py-2.5 px-4  font-medium hover:bg-[#1ab8c0] cursor-pointer transition-colors mt-auto"
         onClick={() => {
-          // TODO: Implement add to cart functionality
-          console.log('Add to cart:', product);
           handleAddToCart(product, 1);
         }}
       >

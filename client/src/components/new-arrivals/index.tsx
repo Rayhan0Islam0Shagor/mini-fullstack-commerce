@@ -5,7 +5,9 @@ import ProductList from './product-list';
 import Link from 'next/link';
 
 const NewArrivals = async () => {
-  const fallback = await prefetchData('/product?sort=createdAt');
+  const fallback = await prefetchData('/product?sort=createdAt', {
+    revalidate: 60,
+  });
 
   return (
     <section className="bg-white py-10">

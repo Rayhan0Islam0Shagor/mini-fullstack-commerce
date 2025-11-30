@@ -3,6 +3,7 @@ import { useProduct } from '@/hooks/useProducts';
 import Image from 'next/image';
 import { motion } from 'motion/react';
 import RelatedProducts from './RelatedProducts';
+import { useCart } from '@/contexts/cart-context';
 
 interface ProductDetailsProps {
   productId: string;
@@ -10,6 +11,7 @@ interface ProductDetailsProps {
 
 const ProductDetails = ({ productId }: ProductDetailsProps) => {
   const { product, isLoading, isError, error } = useProduct(productId);
+  const { handleAddToCart } = useCart();
 
   if (isLoading) {
     return (
@@ -145,11 +147,10 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
 
           {/* Add to Cart Button */}
           <button
-            className="w-full bg-[#0AAEB9] text-white py-3 px-6 font-medium hover:bg-[#1ab8c0] transition-colors rounded-md mt-auto disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#0AAEB9] text-white py-3 px-6 font-medium hover:bg-[#1ab8c0] transition-colors rounded-md mt-auto disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             disabled={product.stock === 0}
             onClick={() => {
-              // TODO: Implement add to cart functionality
-              console.log('Add to cart:', product);
+              handleAddToCart(product, 1);
             }}
           >
             {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}

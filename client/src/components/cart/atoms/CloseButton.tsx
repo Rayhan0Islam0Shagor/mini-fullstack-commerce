@@ -3,7 +3,10 @@ interface CloseButtonProps {
   ariaLabel?: string;
 }
 
-const CloseButton = ({ onClick, ariaLabel = 'Close cart' }: CloseButtonProps) => {
+const CloseButton = ({
+  onClick,
+  ariaLabel = 'Close cart',
+}: CloseButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -23,9 +26,9 @@ const CloseButton = ({ onClick, ariaLabel = 'Close cart' }: CloseButtonProps) =>
           d="M6 18L18 6M6 6l12 12"
         />
       </svg>
+      <span className="sr-only">{ariaLabel}</span>
     </button>
   );
 };
 
 export default CloseButton;
-

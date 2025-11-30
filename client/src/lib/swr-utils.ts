@@ -21,10 +21,14 @@ export const serializeKey = (
 /**
  * Pre-fetch data for SSR/SSG
  * Returns data in the format expected by SWR fallback
+ * @param key - The API endpoint to fetch
+ * @param options - Fetch options including revalidate for ISR
  */
 export const prefetchData = async <T = unknown>(
   key: string,
-  options?: RequestInit,
+  options?: RequestInit & {
+    revalidate?: number | false;
+  },
 ): Promise<Record<string, T>> => {
   try {
     const data = await serverFetcher<T>(key, options);

@@ -23,7 +23,7 @@ export const addToCart = (product: Product, quantity: number = 1) => {
   }
 
   saveCartToStorage(cart);
-  // Dispatch event to notify all components
+  // Dispatch event to notify all components and tabs that cart has been updated
   if (typeof window !== 'undefined') {
     window.dispatchEvent(new Event('cartUpdated'));
   }
@@ -34,7 +34,7 @@ export const removeFromCart = (productId: number) => {
   const cart = getCartFromStorage();
   const filteredCart = cart.filter((item) => item.product.id !== productId);
   saveCartToStorage(filteredCart);
-  // Dispatch event to notify all components
+  // Dispatch event to notify all components and tabs that cart has been updated
   if (typeof window !== 'undefined') {
     window.dispatchEvent(new Event('cartUpdated'));
   }
@@ -53,7 +53,7 @@ export const updateCartQuantity = (productId: number, quantity: number) => {
   }
 
   saveCartToStorage(cart);
-  // Dispatch event to notify all components
+  // Dispatch event to notify all components and tabs that cart has been updated
   if (typeof window !== 'undefined') {
     window.dispatchEvent(new Event('cartUpdated'));
   }
@@ -63,7 +63,7 @@ export const updateCartQuantity = (productId: number, quantity: number) => {
 export const clearCart = () => {
   if (typeof window === 'undefined') return;
   localStorage.removeItem('cart');
-  // Dispatch event to notify all components
+  // Dispatch event to notify all components and tabs that cart has been updated
   window.dispatchEvent(new Event('cartUpdated'));
 };
 

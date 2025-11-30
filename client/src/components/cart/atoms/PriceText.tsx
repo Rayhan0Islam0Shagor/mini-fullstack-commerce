@@ -4,7 +4,11 @@ interface PriceTextProps {
   showCurrency?: boolean;
 }
 
-const PriceText = ({ price, className = '', showCurrency = true }: PriceTextProps) => {
+const PriceText = ({
+  price,
+  className = '',
+  showCurrency = true,
+}: PriceTextProps) => {
   return (
     <span className={className}>
       {showCurrency && '৳'}
@@ -14,4 +18,3 @@ const PriceText = ({ price, className = '', showCurrency = true }: PriceTextProp
 };
 
 export default PriceText;
-

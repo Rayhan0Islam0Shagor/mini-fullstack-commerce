@@ -7,7 +7,8 @@ export const fetcher = async <T = unknown>(
   options?: RequestInit,
 ): Promise<T> => {
   const baseURL =
-    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+    process.env.NEXT_PUBLIC_API_URL ||
+    'https://win-store-backend.vercel.app/api/v1';
 
   const response = await fetch(`${baseURL}${url}`, {
     ...options,
@@ -37,25 +38,39 @@ export const fetcher = async <T = unknown>(
 };
 
 /**
- * Server-side fetcher for SSR
- * Use this in getStaticProps or getServerSideProps
+ * Server-side fetcher for SSR/SSG
+ * Supports ISR (Incremental Static Regeneration) with caching
+ * Use this in Server Components for pre-fetching data
  */
 export const serverFetcher = async <T = unknown>(
   url: string,
-  options?: RequestInit,
+  options?: RequestInit & {
+    revalidate?: number | false;
+  },
 ): Promise<T> => {
   const baseURL =
-    process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+    process.env.NEXT_PUBLIC_API_URL ||
+    'https://win-store-backend.vercel.app/api/v1';
+
+  // Extract revalidate from options
+  const { revalidate, ...fetchOptions } = options || {};
+
+  // Use ISR caching if revalidate is provided, otherwise use default revalidation
+  // This allows static generation with periodic revalidation
+  const cacheConfig =
+    revalidate === false
+      ? { cache: 'no-store' as const }
+      : { next: { revalidate: revalidate ?? 60 } };
 
   const response = await fetch(`${baseURL}${url}`, {
-    ...options,
+    ...fetchOptions,
     headers: {
       'Content-Type': 'application/json',
-      ...options?.headers,
+      ...fetchOptions?.headers,
     },
-    // Disable cache for server-side requests to get fresh data
-    cache: 'no-store',
-  });
+    // Use ISR caching for static generation
+    ...cacheConfig,
+  } as RequestInit);
 
   if (!response.ok) {
     const error = new Error(
@@ -68,7 +83,6 @@ export const serverFetcher = async <T = unknown>(
   const data = await response.json();
 
   // Handle API response format: { success, message, data, meta }
-  // Return the full API response object to preserve meta for pagination
   if (data && typeof data === 'object' && 'data' in data && 'success' in data) {
     return data as T;
   }
