@@ -338,6 +338,64 @@ backend/
 - **[CORS](https://github.com/expressjs/cors)** - Cross-Origin Resource Sharing middleware
 - **[dotenv](https://github.com/motdotla/dotenv)** - Environment variable management
 
+## 🚀 Deployment
+
+### Deploying to Vercel
+
+2. **Navigate to the backend directory**:
+
+   ```bash
+   cd backend
+   ```
+
+3. **Deploy using Vercel CLI**:
+
+   ```bash
+   vercel
+   ```
+
+   Or deploy to production:
+
+   ```bash
+   vercel --prod
+   ```
+
+4. **Set Environment Variables**:
+
+   In the Vercel dashboard:
+
+   - Go to your project settings
+   - Navigate to "Environment Variables"
+   - Add the following variables:
+     - `MONGODB_URI` - Your MongoDB connection string
+     - `NODE_ENV` - Set to `production`
+     - `FRONTEND_URL` (optional) - Your frontend URL for CORS
+
+5. **Verify Deployment**:
+
+   After deployment, Vercel will provide you with a URL. Test the health endpoint:
+
+   ```bash
+   curl https://your-project.vercel.app/api/health
+   ```
+
+#### Important Notes
+
+- The API will be available at: `https://your-project.vercel.app/api/v1/product` and `https://your-project.vercel.app/api/v1/category`
+- All routes are prefixed with `/api` in the Vercel deployment
+- Make sure your MongoDB Atlas IP whitelist includes Vercel's IP ranges (or use `0.0.0.0/0` for all IPs)
+- The serverless function automatically handles cold starts and connection pooling
+
+#### Project Structure for Vercel
+
+```
+backend/
+├── api/
+│   └── index.js          # Serverless function entry point
+├── vercel.json           # Vercel configuration
+└── ...                   # Rest of your project files
+```
+
 ## 💻 Development
 
 ### Available Scripts

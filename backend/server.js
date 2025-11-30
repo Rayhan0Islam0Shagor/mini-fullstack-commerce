@@ -2,8 +2,6 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { connectDB } from './src/config/connectDB.js';
-// import swaggerUi from 'swagger-ui-express';
-// import { swaggerSpec } from './config/swagger.js';
 import { ProductRoutes } from './src/modules/product/product.route.js';
 import { CategoryRoutes } from './src/modules/category/category.route.js';
 
@@ -11,13 +9,17 @@ import { CategoryRoutes } from './src/modules/category/category.route.js';
 try {
   dotenv.config();
 } catch (error) {
-  // dotenv.config() failed
+  console.error('Error loading environment variables:', error);
+  process.exit(1);
 }
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = [
+  'http://localhost:3000',
+  process.env.FRONTEND_URL,
+].filter(Boolean);
 
 app.use(
   cors({
@@ -62,23 +64,17 @@ app.use(
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Swagger API Documentation
-// app.use(
-//   '/api-docs',
-//   swaggerUi.serve,
-//   swaggerUi.setup(swaggerSpec, {
-//     customCss: '.swagger-ui .topbar { display: none }',
-//     customSiteTitle: 'Ecommerce API Documentation',
-//     customfavIcon: '/favicon.ico',
-//   }),
-// );
-
 // Connect to MongoDB (non-blocking)
 connectDB();
 
 // Routes
 app.use('/api/v1/product', ProductRoutes);
 app.use('/api/v1/category', CategoryRoutes);
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 // Global error handler (must be after all routes)
 app.use((err, req, res, next) => {
@@ -105,7 +101,12 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json(response);
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`API Documentation: http://localhost:${PORT}`);
-});
+// Export the app for Vercel serverless functions
+export default app;
+
+// Start the server only if not in serverless environment (Vercel)
+if (!process.env.VERCEL && !process.env.VERCEL_ENV) {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
