@@ -43,7 +43,7 @@ const HeroSlide = ({ content, direction, onDragEnd }: HeroSlideProps) => {
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={1}
       onDragEnd={onDragEnd}
-      className="absolute inset-0 cursor-grab active:cursor-grabbing"
+      className="absolute inset-0 cursor-grab active:cursor-grabbing z-0"
     >
       <HeroBackground banner={content.banner} />
 
